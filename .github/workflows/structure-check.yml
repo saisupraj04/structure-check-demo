@@ -1,0 +1,34 @@
+name: Validate Repo Structure
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  validate-structure:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Validate Folder Structure
+        run: |
+          echo "Checking repository structure..."
+
+          if [ ! -d "terraform" ]; then
+            echo "❌ Missing terraform folder"
+            exit 1
+          fi
+
+          if [ ! -d "jenkins" ]; then
+            echo "❌ Missing jenkins folder"
+            exit 1
+          fi
+
+          if [ ! -f "Makefile" ]; then
+            echo "❌ Missing Makefile"
+            exit 1
+          fi
+
+          echo "✅ Structure is valid"
